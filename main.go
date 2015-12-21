@@ -12,20 +12,21 @@ import (
 )
 
 type EventData struct {
-	EventType  string `json:"event_type"`
-	FacebookID int64  `json:"facebook_id"`
-	FirstName  string `json:"first_name"`
-	LastName   string `json:"last_name"`
-	Gender     string `json:"gender"`
-	Email      string `json:"email"`
+	EventType  string `json:"event_type,omitempty"`
+	FacebookID uint64 `json:"facebook_id,omitempty"`
+	FirstName  string `json:"first_name,omitempty"`
+	LastName   string `json:"last_name,omitempty"`
+	Gender     string `json:"gender,omitempty"`
+	Email      string `json:"email,omitempty"`
+	CampaignID string `json:"campaign_id,omitempty"`
 }
 
 // Event describes an event and its attributes.
 type Event struct {
-	APIKey    string    `json:"API_KEY"`
-	APISecret string    `json:"API_SECRET"`
-	Data      EventData `json:"data"`
-	SDK       string    `json:"sdk"`
+	APIKey    string    `json:"API_KEY,omitempty"`
+	APISecret string    `json:"API_SECRET,omitempty"`
+	Data      EventData `json:"data,omitempty"`
+	SDK       string    `json:"sdk,omitempty"`
 }
 
 var (
@@ -64,6 +65,9 @@ func SendEvent(e Event) error {
 	e.APISecret = APISecret
 
 	body, err := json.Marshal(e)
+	if err != nil {
+		return err
+	}
 	var resp *http.Response
 	for i := 0; i < retries; i++ {
 		resp, err = http.Post(baseURL, jsonType, bytes.NewReader(body))

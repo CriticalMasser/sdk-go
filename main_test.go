@@ -11,7 +11,7 @@ func TestSendEvent(t *testing.T) {
 	e := Event{
 		Data: EventData{
 			EventType:  EventLogin,
-			FacebookID: 12342352,
+			FacebookID: uint64(12342352),
 			FirstName:  "Rocky",
 			LastName:   "Balboa",
 			Gender:     SexMale,
