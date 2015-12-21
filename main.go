@@ -11,16 +11,21 @@ import (
 	"time"
 )
 
-// Event describes an event and its attributes.
-type Event struct {
-	APIKey     string `json:"API_KEY"`
-	APISecret  string `json:"API_SECRET"`
+type EventData struct {
 	EventType  string `json:"event_type"`
 	FacebookID int64  `json:"facebook_id"`
 	FirstName  string `json:"first_name"`
 	LastName   string `json:"last_name"`
 	Gender     string `json:"gender"`
 	Email      string `json:"email"`
+}
+
+// Event describes an event and its attributes.
+type Event struct {
+	APIKey    string    `json:"API_KEY"`
+	APISecret string    `json:"API_SECRET"`
+	Data      EventData `json:"data"`
+	SDK       string    `json:"sdk"`
 }
 
 var (
@@ -54,6 +59,7 @@ var (
 // SendEvent sends event to Critical Masser's Analytics server, returns error
 // if something went wrong.
 func SendEvent(e Event) error {
+	e.SDK = "sdk-go v0.1.0"
 	e.APIKey = APIKey
 	e.APISecret = APISecret
 

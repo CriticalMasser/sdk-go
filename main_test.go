@@ -9,12 +9,14 @@ func TestSendEvent(t *testing.T) {
 	APIKey = os.Getenv("API_KEY")
 	APISecret = os.Getenv("API_SECRET")
 	e := Event{
-		EventType:  EventLogin,
-		FacebookID: 12342352,
-		FirstName:  "Rocky",
-		LastName:   "Balboa",
-		Gender:     SexMale,
-		Email:      "rocky@balboa.com",
+		Data: EventData{
+			EventType:  EventLogin,
+			FacebookID: 12342352,
+			FirstName:  "Rocky",
+			LastName:   "Balboa",
+			Gender:     SexMale,
+			Email:      "rocky@balboa.com",
+		},
 	}
 
 	if err := SendEvent(e); err != nil {
